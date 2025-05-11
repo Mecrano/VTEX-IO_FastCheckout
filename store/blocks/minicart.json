@@ -1,0 +1,32 @@
+{
+  "minicart-product-list#fast-checkout": {
+    "blocks": ["product-list#fast-checkout-minicart"]
+  },
+  "flex-layout.row#fast-checkout-minicart-footer": {
+    "props": {
+      "blockClass": "minicart-footer"
+    },
+    "children": ["flex-layout.col#fast-checkout-minicart-footer"]
+  },
+  "flex-layout.col#fast-checkout-minicart-footer": {
+    "children": ["minicart-summary#fast-checkout"]
+  },
+
+  "minicart-summary#fast-checkout": {
+    "blocks": ["checkout-summary.compact#fast-checkout-minicart"]
+  },
+
+  "checkout-summary.compact#fast-checkout-minicart": {
+    "children": ["summary-totalizers#fast-checkout-minicart"],
+    "props": {
+      "totalizersToShow": ["Items", "Discounts"]
+    }
+  },
+  "summary-totalizers#fast-checkout-minicart": {
+    "props": {
+      "showTotal": true,
+      "showDeliveryTotal": false,
+      "shouldDisplayShippingDisclaimer": false
+    }
+  }
+}

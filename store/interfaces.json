@@ -1,0 +1,19 @@
+{
+  "fast-checkout.back-button": {
+    "component": "BackButton"
+  },
+  "fast-checkout.place-order": {
+    "component": "PlaceOrderButton"
+  },
+  "fast-checkout.invoice": {
+    "component": "Invoice"
+  },
+  "fast-checkout.bags": {
+    "component": "Bags"
+  },
+  "fast-checkout.payment": {
+    "component": "Payment"
+  },
+  "fast-checkout": {},
+  "store.fast-checkout": {}
+}

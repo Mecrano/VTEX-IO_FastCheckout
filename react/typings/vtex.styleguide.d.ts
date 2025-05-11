@@ -1,0 +1,36 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+declare module 'vtex.styleguide' {
+  export const Textarea: any
+  export const Button: any
+  export const ToastProvider: any
+  export const ToastContext: any
+  export const withToast: any
+  export const Card: any
+  export const Input: any
+  export const Spinner: any
+  export const Layout: any
+  export const PageHeader: any
+  export const PageBlock: any
+  export const EXPERIMENTAL_Modal: any
+  export const EXPERIMENTAL_Table: any
+  export const EXPERIMENTAL_useTableMeasures: any
+  export const EXPERIMENTAL_useTableProportion: any
+  export const utils: any
+  export const Tabs: any
+  export const Tab: any
+  export const ButtonWithIcon: any
+  export const InputSearch: any
+  export const Dropdown: any
+  export const IconCheck: any
+  export const IconClose: any
+  export const Dropzone: any
+  export const Checkbox: any
+  export const DatePicker: any
+  export const IconCaretLeft: any
+  export const IconCaretRight: any
+  export const IconCaretDown: any
+  export const IconCaretUp: any
+  export const SelectableCard: any
+  export const NumericStepper: any
+}

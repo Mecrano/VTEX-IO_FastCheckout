@@ -1,4 +1,25 @@
 {
-  "admin/test": "test",
-  "store/test": "test"
+  "store/fast-checkout.titles.invoice": "Datos de facturación",
+  "store/fast-checkout.titles.bags": "Cuantas bolsas necesitas",
+  "store/fast-checkout.titles.payment": "Selecciona tu método de pago",
+  "store/fast-checkout.buttons.back": "Agregar más productos a la orden",
+  "store/fast-checkout.buttons.place-order": "Finalizar compra",
+  "store/fast-checkout.buttons.legal-person": "Persona Jurídica",
+  "store/fast-checkout.buttons.natural-person": "Persona Natural",
+  "store/fast-checkout.buttons.cash": "Efectivo",
+  "store/fast-checkout.buttons.cards": "Datáfono",
+  "store/fast-checkout.inputs.email": "Correo",
+  "store/fast-checkout.inputs.email-placeholder": "Ingresa tu correo",
+  "store/fast-checkout.inputs.first-name": "Nombre",
+  "store/fast-checkout.inputs.first-name-placeholder": "Ingresa tu nombre",
+  "store/fast-checkout.inputs.last-name": "Apellido",
+  "store/fast-checkout.inputs.last-name-placeholder": "Ingresa tu apellido",
+  "store/fast-checkout.selects.document-type": "Tipo de documento",
+  "store/fast-checkout.selects.document-type-placeholder": "Selecciona un tipo de documento",
+  "store/fast-checkout.selects.document-type.options.dni": "Cédula de Ciudadanía",
+  "store/fast-checkout.selects.document-type.options.nit": "NIT",
+  "store/fast-checkout.inputs.document": "Número de documento",
+  "store/fast-checkout.inputs.document-placeholder": "Ingresa tu número de documento",
+  "store/fast-checkout.inputs.phone": "Celular",
+  "store/fast-checkout.inputs.phone-placeholder": "Ingresa tu número de celular"
 }
