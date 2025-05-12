@@ -26,7 +26,7 @@ interface Payment {
   name: string
 }
 
-const CASH_ID = '201'
+const CASH_ID = '17'
 
 const Payment = () => {
   const intl = useIntl()
