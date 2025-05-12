@@ -27,10 +27,11 @@ declare module 'vtex.styleguide' {
   export const Dropzone: any
   export const Checkbox: any
   export const DatePicker: any
+  export const SelectableCard: any
+  export const NumericStepper: any
+  export const Modal: any
   export const IconCaretLeft: any
   export const IconCaretRight: any
   export const IconCaretDown: any
   export const IconCaretUp: any
-  export const SelectableCard: any
-  export const NumericStepper: any
 }

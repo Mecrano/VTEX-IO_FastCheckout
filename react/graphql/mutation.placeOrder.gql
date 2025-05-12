@@ -1,0 +1,5 @@
+mutation placeOrder($orderFormId: String!, $value: Int!) {
+  placeOrder(orderFormId: $orderFormId, value: $value) {
+    orderGroup
+  }
+}

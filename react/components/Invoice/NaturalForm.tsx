@@ -59,20 +59,14 @@ const NaturalForm = () => {
 
     if (updateProfileData?.updateOrderFormProfile?.id === orderForm?.id) {
       setOrderForm(updateProfileData.updateOrderFormProfile)
-      // const { email, firstName, lastName, documentType, document, phone } =
-      //   updateProfileData.updateOrderFormProfile.clientProfileData || {}
-
-      // setData({
-      //   email: email || '',
-      //   firstName: firstName || '',
-      //   lastName: lastName || '',
-      //   documentType: documentType || '',
-      //   document: document || '',
-      //   phone: phone || '',
-      // })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateProfileData, updateProfileError, updateProfileLoading])
+  }, [
+    updateProfileData,
+    updateProfileError,
+    updateProfileLoading,
+    setOrderForm,
+  ])
 
   useEffect(() => {}, [updateProfileError])
 
@@ -97,9 +91,6 @@ const NaturalForm = () => {
   const updateOrderFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
 
-    // eslint-disable-next-line no-console
-    console.log('updateOrderFormField', name, value)
-
     updateProfile({
       variables: {
         profile: {
@@ -107,14 +98,6 @@ const NaturalForm = () => {
         },
       },
     })
-      .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log('updateProfile response', response)
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error('updateProfile error', error)
-      })
   }
 
   return (

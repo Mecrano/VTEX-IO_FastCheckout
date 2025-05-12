@@ -5,6 +5,8 @@
   "title": "Fast Checkout",
   "description": "Fast Checkout",
   "builders": {
+    "graphql": "1.x",
+    "node": "6.x",
     "react": "3.x",
     "messages": "1.x",
     "store": "0.x"
@@ -24,6 +26,30 @@
     "vtex.checkout-resources": "0.x"
   },
   "registries": ["smartcheckout"],
-  "policies": [],
+  "policies": [
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "{{account}}.vtexpayments.com.br",
+        "path": "/api/*"
+      }
+    },
+    {
+      "name": "colossus-fire-event"
+    },
+    {
+      "name": "colossus-write-logs"
+    },
+    {
+      "name": "graphql-query"
+    }
+  ],
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }

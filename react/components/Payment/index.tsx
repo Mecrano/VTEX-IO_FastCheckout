@@ -8,7 +8,9 @@ import UPDATE_PAYMENT from 'vtex.checkout-resources/MutationUpdateOrderFormPayme
 
 import { Cash, Card } from '../Icons'
 import messages from './messages'
-import getDataFromPaymentTerminal from './paymentTerminal'
+import getDataFromPaymentTerminal, {
+  PAYMENT_TERMINAL_ID,
+} from './paymentTerminal'
 
 const CSS_HANDLES = [
   'paymentContainer',
@@ -24,10 +26,12 @@ interface Payment {
   name: string
 }
 
+const CASH_ID = '201'
+
 const Payment = () => {
   const intl = useIntl()
   const handles = useCssHandles(CSS_HANDLES)
-  const { orderForm } = useOrderForm()
+  const { orderForm, setOrderForm } = useOrderForm()
   const [selected, setSelected] = useState<string | null>(null)
 
   const [updatePayment, { data, loading, error }] = useMutation(UPDATE_PAYMENT)
@@ -44,22 +48,21 @@ const Payment = () => {
     }
 
     if (data?.updateOrderFormPayment?.id) {
-      // eslint-disable-next-line no-console
-      console.log('Payment updated successfully:', data.updateOrderFormPayment)
+      setOrderForm(data.updateOrderFormPayment)
     }
-  }, [data, loading, error])
+  }, [data, loading, error, setOrderForm])
 
   const handlePaymentUpdate = useCallback(
     async (paymentMethod: string) => {
-      if (!orderForm) {
+      if (!orderForm?.paymentData) {
         return
       }
 
-      let payment = null
+      let payment: any = null
 
       if (paymentMethod === 'cash') {
         payment = {
-          paymentSystem: '201',
+          paymentSystem: CASH_ID,
           referenceValue: orderForm.value,
           value: orderForm.value,
           installments: 1,
@@ -74,20 +77,44 @@ const Payment = () => {
         return
       }
 
+      const currentPaymentMethod =
+        orderForm?.paymentData?.payments?.[0]?.paymentSystem
+
+      if (currentPaymentMethod === payment.paymentSystem) {
+        return
+      }
+
       updatePayment({
         variables: {
-          payments: [payment],
+          paymentData: {
+            payments: [payment],
+          },
         },
       })
     },
-    [updatePayment, orderForm]
+    [orderForm, updatePayment]
   )
 
   useEffect(() => {
-    if (selected) {
-      handlePaymentUpdate(selected)
+    if (!orderForm?.paymentData?.payments?.length || selected) {
+      return
     }
-  }, [handlePaymentUpdate, selected])
+
+    const paymentMethod = orderForm.paymentData.payments[0].paymentSystem
+
+    if (paymentMethod === CASH_ID) {
+      setSelected('cash')
+    }
+
+    if (paymentMethod === PAYMENT_TERMINAL_ID) {
+      setSelected('cards')
+    }
+  }, [orderForm.paymentData, selected])
+
+  const selectPaymentMethod = (id: string) => {
+    handlePaymentUpdate(id)
+    setSelected(id)
+  }
 
   return (
     <div className={handles.paymentContainer}>
@@ -99,10 +126,9 @@ const Payment = () => {
       >
         <SelectableCard
           hasGroupRigth
-          hasGroupLeft
           noPadding
           selected={selected === 'cash'}
-          onClick={() => setSelected('cash')}
+          onClick={() => selectPaymentMethod('cash')}
         >
           <div
             className={`${handles.paymentCash} pa7 flex items-center justify-center`}
@@ -114,11 +140,10 @@ const Payment = () => {
           </div>
         </SelectableCard>
         <SelectableCard
-          hasGroupRigth
           hasGroupLeft
           noPadding
           selected={selected === 'cards'}
-          onClick={() => setSelected('cards')}
+          onClick={() => selectPaymentMethod('cards')}
         >
           <div
             className={`${handles.paymentCards} pa7 flex items-center justify-center`}

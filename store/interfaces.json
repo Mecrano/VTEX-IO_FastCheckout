@@ -3,7 +3,8 @@
     "component": "BackButton"
   },
   "fast-checkout.place-order": {
-    "component": "PlaceOrderButton"
+    "component": "PlaceOrderButton",
+    "render": "client"
   },
   "fast-checkout.invoice": {
     "component": "Invoice"

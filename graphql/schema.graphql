@@ -1,0 +1,11 @@
+type OrderResponse {
+  orderGroup: String
+}
+
+type Query {
+  doNotCall: String
+}
+
+type Mutation {
+  placeOrder(orderFormId: String!, value: Int!): OrderResponse
+}
