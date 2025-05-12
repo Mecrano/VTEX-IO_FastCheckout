@@ -14,6 +14,7 @@ const NaturalForm = () => {
   const intl = useIntl()
   const handles = useCssHandles(CSS_HANDLES)
   const { orderForm, setOrderForm, loading } = useOrderForm()
+  const [disableFields, setDisableFields] = useState(false)
   const [data, setData] = useState({
     email: '',
     firstName: '',
@@ -47,6 +48,8 @@ const NaturalForm = () => {
   }, [orderForm?.clientProfileData])
 
   useEffect(() => {
+    setDisableFields(false)
+
     if (updateProfileError) {
       console.error('Error updating profile:', updateProfileError)
 
@@ -91,13 +94,25 @@ const NaturalForm = () => {
   const updateOrderFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
 
-    updateProfile({
-      variables: {
-        profile: {
-          [name]: value,
+    if (name === 'email') {
+      setDisableFields(true)
+      updateProfile({
+        variables: {
+          profile: {
+            [name]: value,
+          },
         },
-      },
-    })
+      })
+    } else {
+      updateProfile({
+        variables: {
+          profile: {
+            ...data,
+            [name]: value,
+          },
+        },
+      })
+    }
   }
 
   return (
@@ -111,7 +126,7 @@ const NaturalForm = () => {
           value={data.email}
           onChange={handleChange}
           onBlur={updateOrderFormField}
-          disabled={loading || updateProfileLoading}
+          disabled={loading}
           required
         />
       </div>
@@ -124,11 +139,9 @@ const NaturalForm = () => {
             type="text"
             value={data.firstName}
             onChange={handleChange}
+            onBlur={updateOrderFormField}
             disabled={
-              !orderForm?.canEditData ||
-              loading ||
-              updateProfileLoading ||
-              !data.email
+              !orderForm?.canEditData || loading || disableFields || !data.email
             }
             required
           />
@@ -143,10 +156,7 @@ const NaturalForm = () => {
             onChange={handleChange}
             onBlur={updateOrderFormField}
             disabled={
-              !orderForm?.canEditData ||
-              loading ||
-              updateProfileLoading ||
-              !data.email
+              !orderForm?.canEditData || loading || disableFields || !data.email
             }
             required
           />
@@ -162,18 +172,12 @@ const NaturalForm = () => {
                 value: 'cedulaCOL',
                 label: intl.formatMessage(messages.documentTypeOptionDNI),
               },
-              {
-                value: 'NIT',
-                label: intl.formatMessage(messages.documentTypeOptionNIT),
-              },
             ]}
             value={data.documentType}
             onChange={handleSelect}
+            onBlur={updateOrderFormField}
             disabled={
-              !orderForm?.canEditData ||
-              loading ||
-              updateProfileLoading ||
-              !data.email
+              !orderForm?.canEditData || loading || disableFields || !data.email
             }
             required
           />
@@ -186,11 +190,9 @@ const NaturalForm = () => {
             type="text"
             value={data.document}
             onChange={handleChange}
+            onBlur={updateOrderFormField}
             disabled={
-              !orderForm?.canEditData ||
-              loading ||
-              updateProfileLoading ||
-              !data.email
+              !orderForm?.canEditData || loading || disableFields || !data.email
             }
             required
           />
@@ -204,11 +206,9 @@ const NaturalForm = () => {
           type="tel"
           value={data.phone}
           onChange={handleChange}
+          onBlur={updateOrderFormField}
           disabled={
-            !orderForm?.canEditData ||
-            loading ||
-            updateProfileLoading ||
-            !data.email
+            !orderForm?.canEditData || loading || disableFields || !data.email
           }
           required
         />

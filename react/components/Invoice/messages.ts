@@ -52,6 +52,30 @@ const messages = defineMessages({
   phonePlaceholder: {
     id: 'store/fast-checkout.inputs.phone-placeholder',
   },
+  corporateName: {
+    id: 'store/fast-checkout.inputs.corporate-name',
+  },
+  corporateNamePlaceholder: {
+    id: 'store/fast-checkout.inputs.corporate-name-placeholder',
+  },
+  tradeName: {
+    id: 'store/fast-checkout.inputs.trade-name',
+  },
+  tradeNamePlaceholder: {
+    id: 'store/fast-checkout.inputs.trade-name-placeholder',
+  },
+  corporateDocument: {
+    id: 'store/fast-checkout.inputs.corporate-document',
+  },
+  corporateDocumentPlaceholder: {
+    id: 'store/fast-checkout.inputs.corporate-document-placeholder',
+  },
+  stateInscription: {
+    id: 'store/fast-checkout.inputs.state-inscription',
+  },
+  stateInscriptionPlaceholder: {
+    id: 'store/fast-checkout.inputs.state-inscription-placeholder',
+  },
 })
 
 export default messages
