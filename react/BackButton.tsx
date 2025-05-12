@@ -1,3 +1,3 @@
-import BackButton from './componentes/BackButton'
+import BackButton from './components/BackButton'
 
 export default BackButton

@@ -1,3 +1,3 @@
-import PlaceOrderButton from './componentes/PlaceOrderButton'
+import PlaceOrderButton from './components/PlaceOrderButton'
 
 export default PlaceOrderButton

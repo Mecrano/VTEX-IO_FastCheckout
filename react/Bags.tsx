@@ -1,3 +1,3 @@
-import Bags from './componentes/Bags'
+import Bags from './components/Bags'
 
 export default Bags
