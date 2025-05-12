@@ -4,7 +4,7 @@
   },
   "flex-layout.row#fast-checkout-minicart-footer": {
     "props": {
-      "blockClass": "minicart-footer"
+      "blockClass": "fast-checkout-minicart-footer"
     },
     "children": ["flex-layout.col#fast-checkout-minicart-footer"]
   },

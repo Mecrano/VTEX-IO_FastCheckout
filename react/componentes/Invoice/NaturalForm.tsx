@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Input, Dropdown } from 'vtex.styleguide'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
+import { useOrderForm } from 'vtex.order-manager/OrderForm'
+import { useMutation } from 'react-apollo'
+import UPDATE_PROFILE from 'vtex.checkout-resources/MutationUpdateOrderFormProfile'
 
 import messages from './messages'
 
@@ -10,7 +13,8 @@ const CSS_HANDLES = ['invoiceForm', 'invoiceInput'] as const
 const NaturalForm = () => {
   const intl = useIntl()
   const handles = useCssHandles(CSS_HANDLES)
-  const [data, setData] = React.useState({
+  const { orderForm, setOrderForm, loading } = useOrderForm()
+  const [data, setData] = useState({
     email: '',
     firstName: '',
     lastName: '',
@@ -18,6 +22,59 @@ const NaturalForm = () => {
     document: '',
     phone: '',
   })
+
+  const [
+    updateProfile,
+    {
+      data: updateProfileData,
+      loading: updateProfileLoading,
+      error: updateProfileError,
+    },
+  ] = useMutation(UPDATE_PROFILE)
+
+  useEffect(() => {
+    const { email, firstName, lastName, documentType, document, phone } =
+      orderForm?.clientProfileData || {}
+
+    setData({
+      email: email || '',
+      firstName: firstName || '',
+      lastName: lastName || '',
+      documentType: documentType || '',
+      document: document || '',
+      phone: phone || '',
+    })
+  }, [orderForm?.clientProfileData])
+
+  useEffect(() => {
+    if (updateProfileError) {
+      console.error('Error updating profile:', updateProfileError)
+
+      return
+    }
+
+    if (updateProfileLoading) {
+      return
+    }
+
+    if (updateProfileData?.updateOrderFormProfile?.id === orderForm?.id) {
+      setOrderForm(updateProfileData.updateOrderFormProfile)
+      // const { email, firstName, lastName, documentType, document, phone } =
+      //   updateProfileData.updateOrderFormProfile.clientProfileData || {}
+
+      // setData({
+      //   email: email || '',
+      //   firstName: firstName || '',
+      //   lastName: lastName || '',
+      //   documentType: documentType || '',
+      //   document: document || '',
+      //   phone: phone || '',
+      // })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateProfileData, updateProfileError, updateProfileLoading])
+
+  useEffect(() => {}, [updateProfileError])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -37,8 +94,31 @@ const NaturalForm = () => {
     }))
   }
 
+  const updateOrderFormField = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target
+
+    // eslint-disable-next-line no-console
+    console.log('updateOrderFormField', name, value)
+
+    updateProfile({
+      variables: {
+        profile: {
+          [name]: value,
+        },
+      },
+    })
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log('updateProfile response', response)
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error('updateProfile error', error)
+      })
+  }
+
   return (
-    <form className={`${handles.invoiceForm} flex flex-column`}>
+    <div className={`${handles.invoiceForm} flex flex-column`}>
       <div className="mb4">
         <Input
           label={<FormattedMessage id={messages.email.id} />}
@@ -47,6 +127,8 @@ const NaturalForm = () => {
           type="email"
           value={data.email}
           onChange={handleChange}
+          onBlur={updateOrderFormField}
+          disabled={loading || updateProfileLoading}
           required
         />
       </div>
@@ -57,8 +139,14 @@ const NaturalForm = () => {
             name="firstName"
             placeholder={intl.formatMessage(messages.firstNamePlaceholder)}
             type="text"
-            value={data.email}
+            value={data.firstName}
             onChange={handleChange}
+            disabled={
+              !orderForm?.canEditData ||
+              loading ||
+              updateProfileLoading ||
+              !data.email
+            }
             required
           />
         </div>
@@ -68,8 +156,15 @@ const NaturalForm = () => {
             name="lastName"
             placeholder={intl.formatMessage(messages.lastNamePlaceholder)}
             type="text"
-            value={data.email}
+            value={data.lastName}
             onChange={handleChange}
+            onBlur={updateOrderFormField}
+            disabled={
+              !orderForm?.canEditData ||
+              loading ||
+              updateProfileLoading ||
+              !data.email
+            }
             required
           />
         </div>
@@ -81,7 +176,7 @@ const NaturalForm = () => {
             name="documentType"
             options={[
               {
-                value: 'DNI',
+                value: 'cedulaCOL',
                 label: intl.formatMessage(messages.documentTypeOptionDNI),
               },
               {
@@ -91,6 +186,12 @@ const NaturalForm = () => {
             ]}
             value={data.documentType}
             onChange={handleSelect}
+            disabled={
+              !orderForm?.canEditData ||
+              loading ||
+              updateProfileLoading ||
+              !data.email
+            }
             required
           />
         </div>
@@ -100,8 +201,14 @@ const NaturalForm = () => {
             name="document"
             placeholder={intl.formatMessage(messages.documentPlaceholder)}
             type="text"
-            value={data.email}
+            value={data.document}
             onChange={handleChange}
+            disabled={
+              !orderForm?.canEditData ||
+              loading ||
+              updateProfileLoading ||
+              !data.email
+            }
             required
           />
         </div>
@@ -112,12 +219,18 @@ const NaturalForm = () => {
           name="phone"
           placeholder={intl.formatMessage(messages.phonePlaceholder)}
           type="tel"
-          value={data.email}
+          value={data.phone}
           onChange={handleChange}
+          disabled={
+            !orderForm?.canEditData ||
+            loading ||
+            updateProfileLoading ||
+            !data.email
+          }
           required
         />
       </div>
-    </form>
+    </div>
   )
 }
 

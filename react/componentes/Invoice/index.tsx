@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SelectableCard } from 'vtex.styleguide'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useCssHandles } from 'vtex.css-handles'
+import { useOrderForm } from 'vtex.order-manager/OrderForm'
 
 import { LegalPerson, NaturalPerson } from '../Icons'
 import LegalForm from './LegalForm'
@@ -12,18 +13,32 @@ const CSS_HANDLES = [
   'invoiceContainer',
   'invoiceSelector',
   'invoiceForm',
+  'cardSelector',
 ] as const
 
 const Invoice = () => {
   const intl = useIntl()
   const handles = useCssHandles(CSS_HANDLES)
   const [selected, setSelected] = useState<string | null>(null)
+  const { orderForm } = useOrderForm()
+
+  useEffect(() => {
+    if (orderForm?.clientProfileData?.email) {
+      if (orderForm.clientProfileData.isCorporate) {
+        setSelected('legal')
+      } else {
+        setSelected('natural')
+      }
+    }
+  }, [orderForm?.clientProfileData])
 
   return (
     <div className={handles.invoiceContainer}>
-      <h3 className="t-heading-3 tc">{intl.formatMessage(messages.title)}</h3>
+      <h3 className="t-heading-3 tc c-on-base">
+        {intl.formatMessage(messages.title)}
+      </h3>
       <div
-        className={`${handles.invoiceSelector} flex justify-center items-center`}
+        className={`${handles.invoiceSelector} ${handles.cardSelector} flex justify-center items-center`}
       >
         <SelectableCard
           hasGroupRigth

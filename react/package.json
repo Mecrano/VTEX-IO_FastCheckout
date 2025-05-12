@@ -1,5 +1,5 @@
 {
-  "name": "CHANGE_ME",
+  "name": "fast-checkout",
   "version": "0.0.0",
   "scripts": {
     "test": "vtex-test-tools test"
@@ -24,6 +24,7 @@
     "vtex.css-handles": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.css-handles@0.4.4/public/@types/vtex.css-handles",
     "vtex.flex-layout": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.flex-layout@0.21.4/public/@types/vtex.flex-layout",
     "vtex.minicart": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.minicart@2.68.0/public/@types/vtex.minicart",
+    "vtex.order-manager": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.order-manager@0.12.0/public/@types/vtex.order-manager",
     "vtex.product-list": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.product-list@0.37.3/public/@types/vtex.product-list",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.136.1/public/@types/vtex.render-runtime",
     "vtex.rich-text": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.rich-text@0.16.0/public/@types/vtex.rich-text",

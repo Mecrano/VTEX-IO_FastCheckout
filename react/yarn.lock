@@ -5353,6 +5353,10 @@ verror@1.10.0:
   version "2.68.0"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.minicart@2.68.0/public/@types/vtex.minicart#8370cc2da68f149743ef1dfb4ce5b1a64095970f"
 
+"vtex.order-manager@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.order-manager@0.12.0/public/@types/vtex.order-manager":
+  version "0.12.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.order-manager@0.12.0/public/@types/vtex.order-manager#2cf6a9d2a31bc503b783c257695b0d17c09b5696"
+
 "vtex.product-list@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.product-list@0.37.3/public/@types/vtex.product-list":
   version "0.37.3"
   resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.product-list@0.37.3/public/@types/vtex.product-list#cb28a95af49795fff2ca0a7b912bced2226f539d"

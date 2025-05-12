@@ -2,6 +2,7 @@
   "store/fast-checkout.titles.invoice": "Datos de facturación",
   "store/fast-checkout.titles.bags": "Cuantas bolsas necesitas",
   "store/fast-checkout.titles.payment": "Selecciona tu método de pago",
+  "store/fast-checkout.titles.product-list": "Resumen de la compra",
   "store/fast-checkout.buttons.back": "Agregar más productos a la orden",
   "store/fast-checkout.buttons.place-order": "Finalizar compra",
   "store/fast-checkout.buttons.legal-person": "Persona Jurídica",
