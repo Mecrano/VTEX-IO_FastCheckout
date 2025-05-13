@@ -1,7 +1,7 @@
 {
   "vendor": "totemmsv",
   "name": "fast-checkout",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "title": "Fast Checkout",
   "description": "Fast Checkout",
   "builders": {
