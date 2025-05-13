@@ -1,7 +1,7 @@
 {
-  "vendor": "massivespacenew",
+  "vendor": "totemmsv",
   "name": "fast-checkout",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "title": "Fast Checkout",
   "description": "Fast Checkout",
   "builders": {
@@ -26,9 +26,7 @@
     "vtex.checkout-resources": "0.x",
     "vtex.store-graphql": "2.x"
   },
-  "registries": [
-    "smartcheckout"
-  ],
+  "registries": ["smartcheckout"],
   "policies": [
     {
       "name": "outbound-access",

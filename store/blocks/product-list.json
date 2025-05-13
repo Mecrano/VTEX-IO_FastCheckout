@@ -26,8 +26,9 @@
   },
   "flex-layout.col#fast-checkout-main-container": {
     "children": [
-      "flex-layout.row#fast-checkout-product-name",
+      "flex-layout.row#fast-checkout-top",
       "flex-layout.row#fast-checkout-product-variations",
+      "flex-layout.row#fast-checkout-quantity-selector",
       "flex-layout.row#fast-checkout-price",
       "flex-layout.row#fast-checkout-message"
     ],
@@ -35,20 +36,42 @@
       "width": "grow"
     }
   },
+  "flex-layout.row#fast-checkout-quantity-selector": {
+    "children": ["quantity-selector#fast-checkout"],
+    "props": {
+      "marginTop": 2,
+      "marginBottom": 1,
+      "preventHorizontalStretch": true
+    }
+  },
+  "quantity-selector#fast-checkout": {
+    "title": "Selector Cantidad",
+    "props": {
+      "blockClass": "selector__quantity-minicart",
+      "mode": "stepper"
+    }
+  },
+  "flex-layout.row#fast-checkout-top": {
+    "children": [
+      "flex-layout.row#fast-checkout-product-name",
+      "flex-layout.col#fast-checkout-remove-button"
+    ],
+    "props": {
+      "colSizing": "auto",
+      "preserveLayoutOnMobile": true
+    }
+  },
+  "flex-layout.col#fast-checkout-remove-button": {
+    "children": ["remove-button"],
+    "props": {
+      "marginLeft": 3
+    }
+  },
   "flex-layout.row#fast-checkout-product-name": {
     "children": ["vtex.product-list:product-name"]
   },
   "flex-layout.row#fast-checkout-product-variations": {
-    "children": ["product-variations"],
-    "props": {
-      "marginTop": 2
-    }
-  },
-  "flex-layout.row#fast-checkout-unit-price": {
-    "children": ["unit-price"],
-    "props": {
-      "marginTop": 2
-    }
+    "children": ["product-variations"]
   },
   "flex-layout.row#fast-checkout-price": {
     "children": ["price#fast-checkout-mobile"],
