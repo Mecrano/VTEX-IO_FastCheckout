@@ -11,15 +11,14 @@
   "flex-layout.col#fast-checkout": {
     "children": [
       "flex-layout.row#fast-checkout-title",
-      "flex-layout.row#fast-checkout-container",
-      "flex-layout.row#fast-checkout-place-order"
+      "flex-layout.row#fast-checkout-container"
     ]
   },
   "flex-layout.row#fast-checkout-title": {
     "children": ["flex-layout.col#fast-checkout-title"],
     "props": {
-      "marginBottom": 8,
-      "marginTop": 8,
+      "marginBottom": 5,
+      "marginTop": 5,
       "preserveLayoutOnMobile": true
     }
   },
@@ -38,8 +37,7 @@
       "flex-layout.col#fast-checkout-products"
     ],
     "props": {
-      "colGap": 5,
-      "rowGap": 5,
+      "colGap": 3,
       "preserveLayoutOnMobile": true
     }
   },
@@ -58,7 +56,8 @@
     "children": [
       "flex-layout.row#fast-checkout-product-list-title",
       "minicart-product-list#fast-checkout",
-      "flex-layout.row#fast-checkout-minicart-footer"
+      "flex-layout.row#fast-checkout-minicart-footer",
+      "flex-layout.row#fast-checkout-place-order"
     ],
     "props": {
       "blockClass": "fast-checkout-products",
@@ -77,14 +76,14 @@
       "blockClass": "fast-checkout-product-list-title",
       "text": "Resumen de la compra",
       "textAlignment": "CENTER",
-      "font": "t-heading-3"
+      "font": "t-heading-4"
     }
   },
   "flex-layout.row#fast-checkout-place-order": {
     "children": ["flex-layout.col#fast-checkout-place-order"],
     "props": {
-      "marginBottom": 6,
-      "marginTop": 6,
+      "marginBottom": 4,
+      "marginTop": 4,
       "preserveLayoutOnMobile": true
     }
   },

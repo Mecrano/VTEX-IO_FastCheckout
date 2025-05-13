@@ -37,8 +37,8 @@ const messages = defineMessages({
   documentTypeOptionDNI: {
     id: 'store/fast-checkout.selects.document-type.options.dni',
   },
-  documentTypeOptionNIT: {
-    id: 'store/fast-checkout.selects.document-type.options.nit',
+  documentTypeOptionCE: {
+    id: 'store/fast-checkout.selects.document-type.options.ce',
   },
   document: {
     id: 'store/fast-checkout.inputs.document',
@@ -75,6 +75,12 @@ const messages = defineMessages({
   },
   stateInscriptionPlaceholder: {
     id: 'store/fast-checkout.inputs.state-inscription-placeholder',
+  },
+  invoiceAddress: {
+    id: 'store/fast-checkout.inputs.invoice-address',
+  },
+  invoiceAddressPlaceholder: {
+    id: 'store/fast-checkout.inputs.invoice-address-placeholder',
   },
 })
 

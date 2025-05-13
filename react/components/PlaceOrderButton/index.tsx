@@ -7,7 +7,9 @@ import { useMutation } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 
 import PLACE_ORDER from '../../graphql/mutation.placeOrder.gql'
+import { CASH_ID, PAYMENT_TERMINAL_ID } from '../Payment'
 import ModalLoading from './ModalLoading'
+import placeOrderWithDatafono from './datafono'
 import messages from './messages'
 
 const CSS_HANDLES = ['placeOrderContainer'] as const
@@ -20,14 +22,28 @@ const PlaceOrderButton = () => {
   const [placeOrder, { data, loading, error }] = useMutation(PLACE_ORDER)
 
   const handlePlaceOrder = useCallback(() => {
-    setModalOpen(true)
-    placeOrder({
-      variables: {
-        orderFormId: orderForm.id,
-        value: orderForm.value,
-      },
-    })
-  }, [orderForm?.id, orderForm?.value, placeOrder])
+    if (!orderForm?.id || !orderForm?.value) {
+      return
+    }
+
+    const [{ paymentSystem }] = orderForm?.paymentData?.payments
+
+    if (paymentSystem === CASH_ID) {
+      setModalOpen(true)
+      placeOrder({
+        variables: {
+          orderFormId: orderForm.id,
+          value: orderForm.value,
+        },
+      })
+
+      return
+    }
+
+    if (paymentSystem === PAYMENT_TERMINAL_ID) {
+      placeOrderWithDatafono(orderForm)
+    }
+  }, [orderForm, placeOrder])
 
   useEffect(() => {
     if (error) {

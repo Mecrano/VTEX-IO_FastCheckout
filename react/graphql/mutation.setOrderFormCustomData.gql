@@ -1,0 +1,15 @@
+mutation setOrderFormCustomData(
+  $appId: String
+  $field: String
+  $value: String
+) {
+  setOrderFormCustomData(appId: $appId, field: $field, value: $value) {
+    customData {
+      customApps {
+        fields
+        id
+        major
+      }
+    }
+  }
+}

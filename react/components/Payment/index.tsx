@@ -8,9 +8,6 @@ import UPDATE_PAYMENT from 'vtex.checkout-resources/MutationUpdateOrderFormPayme
 
 import { Cash, Card } from '../Icons'
 import messages from './messages'
-import getDataFromPaymentTerminal, {
-  PAYMENT_TERMINAL_ID,
-} from './paymentTerminal'
 
 const CSS_HANDLES = [
   'paymentContainer',
@@ -19,6 +16,7 @@ const CSS_HANDLES = [
   'paymentCash',
   'paymentCards',
   'cardSelector',
+  'title',
 ] as const
 
 interface Payment {
@@ -26,7 +24,8 @@ interface Payment {
   name: string
 }
 
-const CASH_ID = '17'
+export const CASH_ID = '17'
+export const PAYMENT_TERMINAL_ID = '202'
 
 const Payment = () => {
   const intl = useIntl()
@@ -70,7 +69,12 @@ const Payment = () => {
       }
 
       if (paymentMethod === 'cards') {
-        payment = await getDataFromPaymentTerminal(orderForm)
+        payment = {
+          paymentSystem: PAYMENT_TERMINAL_ID,
+          referenceValue: orderForm.value,
+          value: orderForm.value,
+          installments: 1,
+        }
       }
 
       if (!payment) {
@@ -118,9 +122,9 @@ const Payment = () => {
 
   return (
     <div className={handles.paymentContainer}>
-      <h3 className="t-heading-3 tc c-on-base">
+      <h4 className={`${handles.title} t-heading-4 tc c-on-base`}>
         {intl.formatMessage(messages.title)}
-      </h3>
+      </h4>
       <div
         className={`${handles.paymentSelector} ${handles.cardSelector} flex justify-center items-center`}
       >
@@ -133,7 +137,7 @@ const Payment = () => {
           <div
             className={`${handles.paymentCash} pa7 flex items-center justify-center`}
           >
-            <Cash size="50" />
+            <Cash size="40" />
             <div className="ml3 f4 tc">
               <FormattedMessage id={messages.cash.id} />
             </div>
@@ -148,7 +152,7 @@ const Payment = () => {
           <div
             className={`${handles.paymentCards} pa7 flex items-center justify-center`}
           >
-            <Card size="50" />
+            <Card size="40" />
             <div className="ml3 f4 tc">
               <FormattedMessage id={messages.cards.id} />
             </div>

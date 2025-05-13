@@ -6,6 +6,7 @@ import { useOrderForm } from 'vtex.order-manager/OrderForm'
 import { useMutation } from 'react-apollo'
 import UPDATE_PROFILE from 'vtex.checkout-resources/MutationUpdateOrderFormProfile'
 
+import UPDATE_CUSTOM_DATA from '../../graphql/mutation.setOrderFormCustomData.gql'
 import messages from './messages'
 
 const CSS_HANDLES = ['invoiceForm', 'invoiceInput'] as const
@@ -27,6 +28,7 @@ const LegalForm = () => {
     tradeName: '',
     corporateDocument: '',
     stateInscription: '',
+    invoiceAddress: '',
   })
 
   const [
@@ -37,6 +39,15 @@ const LegalForm = () => {
       error: updateProfileError,
     },
   ] = useMutation(UPDATE_PROFILE)
+
+  const [
+    updateCustomData,
+    {
+      data: updateCustomDataData,
+      loading: updateCustomDataLoading,
+      error: updateCustomDataError,
+    },
+  ] = useMutation(UPDATE_CUSTOM_DATA)
 
   useEffect(() => {
     const {
@@ -52,6 +63,10 @@ const LegalForm = () => {
       stateInscription,
     } = orderForm?.clientProfileData || {}
 
+    const customDataFastCheckout = orderForm?.customData?.customApps?.find(
+      ({ id }: any) => id === 'fast-checkout'
+    )
+
     setData({
       email: email || '',
       firstName: firstName || '',
@@ -64,8 +79,9 @@ const LegalForm = () => {
       tradeName: tradeName || '',
       corporateDocument: corporateDocument || '',
       stateInscription: stateInscription || '',
+      invoiceAddress: customDataFastCheckout?.fields?.invoiceAddress || '',
     })
-  }, [orderForm?.clientProfileData])
+  }, [orderForm?.clientProfileData, orderForm?.customData])
 
   useEffect(() => {
     setDisableFields(false)
@@ -91,7 +107,29 @@ const LegalForm = () => {
     setOrderForm,
   ])
 
-  useEffect(() => {}, [updateProfileError])
+  useEffect(() => {
+    setDisableFields(false)
+
+    if (updateCustomDataError) {
+      console.error('Error updating custom data:', updateCustomDataError)
+
+      return
+    }
+
+    if (updateCustomDataLoading) {
+      return
+    }
+
+    if (updateCustomDataData?.setOrderFormCustomData?.id === orderForm?.id) {
+      setOrderForm(updateCustomDataData?.setOrderFormCustomData)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    updateCustomDataData,
+    updateCustomDataLoading,
+    updateCustomDataError,
+    setOrderForm,
+  ])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
@@ -122,6 +160,34 @@ const LegalForm = () => {
             isCorporate: true,
             [name]: value,
           },
+        },
+      })
+    } else if (name === 'corporateName') {
+      updateProfile({
+        variables: {
+          profile: {
+            ...data,
+            [name]: value,
+            tradeName: value,
+          },
+        },
+      })
+    } else if (name === 'stateInscription') {
+      updateProfile({
+        variables: {
+          profile: {
+            ...data,
+            [name]: value,
+            corporateDocument: value,
+          },
+        },
+      })
+    } else if (name === 'invoiceAddress') {
+      updateCustomData({
+        variables: {
+          appId: 'fast-checkout',
+          field: name,
+          value,
         },
       })
     } else {
@@ -193,6 +259,10 @@ const LegalForm = () => {
                 value: 'cedulaCOL',
                 label: intl.formatMessage(messages.documentTypeOptionDNI),
               },
+              {
+                value: 'cedulaExt',
+                label: intl.formatMessage(messages.documentTypeOptionCE),
+              },
             ]}
             value={data.documentType}
             onChange={handleSelect}
@@ -208,7 +278,7 @@ const LegalForm = () => {
             label={<FormattedMessage id={messages.document.id} />}
             name="document"
             placeholder={intl.formatMessage(messages.documentPlaceholder)}
-            type="text"
+            type="number"
             value={data.document}
             onChange={handleChange}
             onBlur={updateOrderFormField}
@@ -252,46 +322,12 @@ const LegalForm = () => {
         </div>
         <div className="w-50 pl2">
           <Input
-            label={<FormattedMessage id={messages.tradeName.id} />}
-            name="tradeName"
-            placeholder={intl.formatMessage(messages.tradeNamePlaceholder)}
-            type="text"
-            value={data.tradeName}
-            onChange={handleChange}
-            onBlur={updateOrderFormField}
-            disabled={
-              !orderForm?.canEditData || loading || disableFields || !data.email
-            }
-            required
-          />
-        </div>
-      </div>
-      <div className="flex flex-row justify-between items-center mb4">
-        <div className="w-50 pr2">
-          <Input
-            label={<FormattedMessage id={messages.corporateDocument.id} />}
-            name="corporateDocument"
-            placeholder={intl.formatMessage(
-              messages.corporateDocumentPlaceholder
-            )}
-            type="text"
-            value={data.corporateDocument}
-            onChange={handleChange}
-            onBlur={updateOrderFormField}
-            disabled={
-              !orderForm?.canEditData || loading || disableFields || !data.email
-            }
-            required
-          />
-        </div>
-        <div className="w-50 pl2">
-          <Input
             label={<FormattedMessage id={messages.stateInscription.id} />}
             name="stateInscription"
             placeholder={intl.formatMessage(
               messages.stateInscriptionPlaceholder
             )}
-            type="text"
+            type="number"
             value={data.stateInscription}
             onChange={handleChange}
             onBlur={updateOrderFormField}
@@ -301,6 +337,21 @@ const LegalForm = () => {
             required
           />
         </div>
+      </div>
+      <div className="mb4">
+        <Input
+          label={<FormattedMessage id={messages.invoiceAddress.id} />}
+          name="invoiceAddress"
+          placeholder={intl.formatMessage(messages.invoiceAddressPlaceholder)}
+          type="tel"
+          value={data.invoiceAddress}
+          onChange={handleChange}
+          onBlur={updateOrderFormField}
+          disabled={
+            !orderForm?.canEditData || loading || disableFields || !data.email
+          }
+          required
+        />
       </div>
     </div>
   )

@@ -172,6 +172,10 @@ const NaturalForm = () => {
                 value: 'cedulaCOL',
                 label: intl.formatMessage(messages.documentTypeOptionDNI),
               },
+              {
+                value: 'cedulaExt',
+                label: intl.formatMessage(messages.documentTypeOptionCE),
+              },
             ]}
             value={data.documentType}
             onChange={handleSelect}
@@ -187,7 +191,7 @@ const NaturalForm = () => {
             label={<FormattedMessage id={messages.document.id} />}
             name="document"
             placeholder={intl.formatMessage(messages.documentPlaceholder)}
-            type="text"
+            type="number"
             value={data.document}
             onChange={handleChange}
             onBlur={updateOrderFormField}

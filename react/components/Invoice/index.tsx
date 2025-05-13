@@ -14,6 +14,7 @@ const CSS_HANDLES = [
   'invoiceSelector',
   'invoiceForm',
   'cardSelector',
+  'title',
 ] as const
 
 const Invoice = () => {
@@ -34,9 +35,9 @@ const Invoice = () => {
 
   return (
     <div className={handles.invoiceContainer}>
-      <h3 className="t-heading-3 tc c-on-base">
+      <h4 className={`${handles.title} t-heading-4 tc c-on-base`}>
         {intl.formatMessage(messages.title)}
-      </h3>
+      </h4>
       <div
         className={`${handles.invoiceSelector} ${handles.cardSelector} flex justify-center items-center`}
       >
@@ -48,7 +49,7 @@ const Invoice = () => {
           onClick={() => setSelected('legal')}
         >
           <div className="pa7 flex items-center justify-center">
-            <LegalPerson size="50" />
+            <LegalPerson size="40" />
             <div className="ml3 f4 tc">
               <FormattedMessage id={messages.legalPerson.id} />
             </div>
@@ -62,7 +63,7 @@ const Invoice = () => {
           onClick={() => setSelected('natural')}
         >
           <div className="pa7 flex items-center justify-center">
-            <NaturalPerson size="50" />
+            <NaturalPerson size="40" />
             <div className="ml3 f4 tc">
               <FormattedMessage id={messages.naturalPerson.id} />
             </div>
